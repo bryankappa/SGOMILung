@@ -13,8 +13,9 @@ https://arxiv.org/pdf/2402.12354.pdf
 
 # Math
 
+
 Simple Workflow for now
 ![image](https://github.com/bryankappa/SGOMILung/assets/90988298/d4009836-db0b-49c8-98f1-366e57e6477b)
 
-# Preprocess Testing X
+# Preprocess Test
 ![Figure_1](https://github.com/bryankappa/SGOMILung/assets/90988298/94cde80f-dea4-4a01-8e97-3e470b002ccf)
