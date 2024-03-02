@@ -6,6 +6,7 @@ from torchvision.datasets import ImageFolder
 from skimage import exposure
 import cv2
 import os
+import torch
 
 
 class BaseTransform:
@@ -36,7 +37,6 @@ class GrayScaleImage(BaseTransform):
 
 class LungDatasetLoader:
     def __init__(self, dataset_path, batch_size, num_workers):
-        # Ensure the dataset path exists
         if not os.path.exists(dataset_path):
             raise FileNotFoundError(f"The dataset path {dataset_path} does not exist.")
         
@@ -49,22 +49,28 @@ class LungDatasetLoader:
             HistogramEqual(),
             DenoiseImage(),
             transforms.ToTensor(),
-            # Normalize images (values should be dataset-specific)
             transforms.Normalize(mean=[0.485], std=[0.229])
         ])
 
     def get_data_loader(self):
-        # Create a dataset using the ImageFolder class and apply transformations
         dataset = ImageFolder(root=self.dataset_path, transform=self.transform)
-        # Create a DataLoader to load the images in batches
         data_loader = DataLoader(dataset, batch_size=self.batch_size, shuffle=True, num_workers=self.num_workers)
         return data_loader
+    
+    def save_batch_file(self, file_path):
+        data_loader = self.get_data_loader()
+        for i, (images, labels) in enumerate(data_loader):
+            torch.save((images, labels), file_path)
+            print(f"Batch {i} saved to {file_path}")
+            break
 
 
 if __name__ == "__main__":
     # Test the LungDatasetLoader class
-    dataset_path = '../Data'
+    dataset_path = r'C:\Users\brand\Documents\projects\SGOMILung\Data'
     batch_size = 32
     num_workers = 4
     lung_loader = LungDatasetLoader(dataset_path, batch_size, num_workers)
     data_loader = lung_loader.get_data_loader()
+    save_path = r'C:\Users\brand\Documents\projects\SGOMILung\Data\batch.pt'
+    lung_loader.save_batch_file(save_path)

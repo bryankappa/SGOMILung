@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 from transform import *
 
 # lung image output to test out
-lung_image = Image.open('../Data/00000001_000.png')
+lung_image = Image.open(r'C:\Users\brand\Documents\projects\SGOMILung\Data\lung_data1\00000001_000.png')
 histogram_eq = HistogramEqual()
 hist_eq = histogram_eq(lung_image)
 # Display the original and the equalized image
